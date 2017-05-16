@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # This file is part of Invenio.
-# Copyright (C) 2015, 2016, 2017 CERN.
+# Copyright (C) 2017 CERN.
 #
 # Invenio is free software; you can redistribute it
 # and/or modify it under the terms of the GNU General Public License as
@@ -22,25 +22,16 @@
 # waive the privileges and immunities granted to it by virtue of its status
 # as an Intergovernmental Organization or submit itself to any jurisdiction.
 
-include .dockerignore
-include .editorconfig
-include .lgtm MAINTAINERS
-include *.rst
-include *.sh
-include *.txt
-include *.yml
-include babel.ini
-include docs/requirements.txt
-include LICENSE
-include pytest.ini
-recursive-include docs *.bat
-recursive-include docs *.py
-recursive-include docs *.rst
-recursive-include docs Makefile
-recursive-include invenio_assets *.babelrc
-recursive-include invenio_assets *.eslintignore
-recursive-include invenio_assets *.js
-recursive-include invenio_assets *.json
-recursive-include misc *.py
-recursive-include misc *.rst
-recursive-include tests *.py
+"""Default Webpack project for Invenio."""
+
+from __future__ import absolute_import, print_function
+
+from flask_webpackext import WebpackBundleProject
+from pywebpack import bundles_from_entry_point
+
+project = WebpackBundleProject(
+    __name__,
+    project_folder='assets',
+    config_path='build/config.json',
+    bundles=bundles_from_entry_point('invenio_assets.webpack'),
+)
